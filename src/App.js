@@ -1,18 +1,21 @@
 import React from "react";
 
-// Импорт медиа: изображения, видео и логотип. Все файлы должны
-// находиться в папке src/assets.
-import heroImage from "./assets/hero.jpg";
-import visionImage from "./assets/vision.png";
-import dronePhoto from "./assets/drone.png";
+// HERO: две разные картинки
+import heroDesktop from "./assets/hero_desktop.jpg";
+import heroMobile from "./assets/hero_mobile.jpg";
+
+// Demo медиа
 import demoVideo from "./assets/landing.mp4";
-import vidImage from './assets/start_vid.jpg'
-import logo from "./assets/logo.png";
+import dronePhoto from "./assets/drone.png";
+import toroidalModel from "./assets/toroidal.png";
+import stationPhoto from "./assets/dock.jpg";
 
-// Универсальная карточка для основных характеристик/фишек.
-function Card({ icon, title, description }) {
+// Vision (оставляем)
+import visionImage from "./assets/vision.png";
+
+function FeatureCard({ icon, title, description }) {
   return (
-    <div className="card">
+    <div className="feature-card">
       <i className={`fa-solid ${icon}`} />
       <h3>{title}</h3>
       <p>{description}</p>
@@ -20,184 +23,155 @@ function Card({ icon, title, description }) {
   );
 }
 
-// Карточка для экспериментальных направлений.
-function ExperimentCard({ icon, title, description, status }) {
+function HeroContent() {
   return (
-    <div className="experiment-card">
-      <i className={`fa-solid ${icon}`} />
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <div className="experiment-status">{status}</div>
-    </div>
-  );
-}
+    <div className="hero-content">
+      <h1>Enlil Systems</h1>
 
-// Шапка с героем и ключевым предложением.
-function Hero() {
-  return (
-    <header className="hero" style={{ backgroundImage: `url(${heroImage})` }}>
-      <div className="hero-overlay">
-        <div className="hero-inner">
-          <h1>Enlil Systems</h1>
-          <p className="tagline">
-            Autonomous hexacopter with precision landing and magnetic charging dock.
-          </p>
-          <div className="stats">
-            <div className="stat">
-              <span className="value">20&nbsp;km</span>
-              <span className="label">range</span>
-            </div>
-            <div className="stat">
-              <span className="value">5&nbsp;kg</span>
-              <span className="label">payload</span>
-            </div>
+      <p className="hero-subtitle">
+        Autonomous hexacopter with precision landing and magnetic charging dock.
+      </p>
 
-          </div>
-          <div className="hero-actions">
-            <a href="#media" className="cta-button">Watch demo</a>
-            <a href="#contact" className="ghost-button">Contact</a>
-          </div>
+      <div className="hero-stats">
+        <div className="hero-stat">
+          <div className="hero-stat-value">20 km</div>
+          <div className="hero-stat-label">RANGE</div>
+        </div>
+        <div className="hero-stat">
+          <div className="hero-stat-value">5 kg</div>
+          <div className="hero-stat-label">PAYLOAD</div>
         </div>
       </div>
-    </header>
+
+      <div className="hero-actions">
+        <a href="#demo" className="cta-button">Watch demo</a>
+        <a href="#contact" className="ghost-button">Contact</a>
+      </div>
+    </div>
   );
 }
 
-// Основные особенности устройства.
-function Highlights() {
-  const items = [
-    {
-      icon: "fa-wifi",
-      title: "Mission autonomy",
-      description:
-        "Mission is uploaded while the drone charges; flight continues on GPS without a constant link.",
-    },
-    {
-      icon: "fa-crosshairs",
-      title: "Precision landing",
-      description:
-        "On-board vision with ArUco markers guides a soft touchdown. Magnets align and secure the connection.",
-    },
-    {
-      icon: "fa-bolt",
-      title: "Magnetic charging",
-      description:
-        "Low‑cost dock with contact pads and BMS module recharges the pack automatically between missions.",
-    },
+function Hero() {
+  return (
+    <>
+      {/* DESKTOP HERO */}
+      <section className="hero hero-desktop" style={{ backgroundImage: `url(${heroDesktop})` }}>
+        <div className="hero-overlay" />
+        <HeroContent />
+      </section>
+
+      {/* MOBILE HERO */}
+      <section className="hero hero-mobile" style={{ backgroundImage: `url(${heroMobile})` }}>
+        <div className="hero-overlay" />
+        <HeroContent />
+      </section>
+    </>
+  );
+}
+
+function Features() {
+  const features = [
     {
       icon: "fa-route",
       title: "Range & payload",
       description:
-        "Up to 20 km range carrying up to 5 kg (depending on load and conditions).",
+        "Up to 20 km range and up to 5 kg payload (depends on conditions and mission profile).",
+    },
+    {
+      icon: "fa-camera",
+      title: "Vision landing (ArUco)",
+      description:
+        "Precision landing using onboard camera and ArUco markers for repeatable docking.",
+    },
+    {
+      icon: "fa-magnet",
+      title: "Magnetic alignment & charging",
+      description:
+        "Magnets help alignment on the dock; charging happens through contact pads with BMS/charge control.",
+    },
+    {
+      icon: "fa-wifi",
+      title: "No continuous link required",
+      description:
+        "Mission uploads while on dock; flight runs автономно by GPS. Internet isn't required all the time.",
     },
   ];
+
   return (
-    <section className="highlights" id="highlights">
+    <section className="features" id="features">
       <h2>Highlights</h2>
-      <div className="card-grid">
-        {items.map(({ icon, title, description }) => (
-          <Card key={title} icon={icon} title={title} description={description} />
+      <div className="feature-grid">
+        {features.map((f) => (
+          <FeatureCard key={f.title} icon={f.icon} title={f.title} description={f.description} />
         ))}
       </div>
     </section>
   );
 }
 
-// Блок для экспериментальных направлений: батарея и тороидальные пропеллеры.
-function Experiments() {
-  const experiments = [
-    {
-      icon: "fa-battery-half",
-      title: "Battery swap module",
-      description:
-        "Side-access tray with linear actuators to remove and insert the pack for rapid turnaround.",
-      status: "In development",
-    },
-    {
-      icon: "fa-fan",
-      title: "Toroidal propellers",
-      description:
-        "Testing toroidal propeller designs to reduce noise and improve efficiency. These new shapes spread vortices over the whole propeller, lowering sound levels.",
-      status: "Experimental",
-    },
-  ];
+function Demo() {
   return (
-    <section className="experiments" id="experiments">
-      <h2>R&D Focus</h2>
-      <div className="experiment-grid">
-        {experiments.map(({ icon, title, description, status }) => (
-          <ExperimentCard
-            key={title}
-            icon={icon}
-            title={title}
-            description={description}
-            status={status}
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
+    <section className="demo" id="demo">
+      <h2>Demo</h2>
+      <p className="demo-subtitle">See our autonomous landing and charging prototype in action.</p>
 
-// Секция с демонстрационными материалами: видео и фото.
-function Media() {
-  return (
-    <section className="media" id="media">
-      <div className="media-header">
-        <h2>Demo</h2>
-        <p>See our autonomous landing and charging prototype in action.</p>
-      </div>
-      <div className="media-grid">
-        <div className="media-item">
-          <video
-            src={demoVideo}
-            controls
-            loop
-            muted
-            poster={vidImage}
-            className="media-video"
-          />
-          <div className="media-caption">
+      <div className="demo-grid">
+        <div className="demo-card">
+          <div className="demo-media">
+            <video className="demo-video" src={demoVideo} controls playsInline />
+          </div>
+          <div className="demo-caption">
             Autonomous landing on the dock — camera + ArUco + magnetic alignment.
           </div>
         </div>
-        <div className="media-item">
-          <img src={dronePhoto} alt="Drone on dock" className="media-photo" />
-          <div className="media-caption">Prototype hexacopter and low‑cost dock.</div>
+
+        <div className="demo-card">
+          <div className="demo-media">
+            <img className="demo-img" src={dronePhoto} alt="Hexacopter prototype" />
+          </div>
+          <div className="demo-caption">Prototype hexacopter.</div>
+        </div>
+
+        <div className="demo-card">
+          <div className="demo-media">
+            <img className="demo-img" src={toroidalModel} alt="Toroidal propellers (3D model)" />
+          </div>
+          <div className="demo-caption">
+            Toroidal propellers — experiments in progress.
+          </div>
+        </div>
+
+        <div className="demo-card">
+          <div className="demo-media">
+            <img className="demo-img" src={stationPhoto} alt="Charging dock station" />
+          </div>
+          <div className="demo-caption">Low-cost charging dock station (prototype). The ArUco marker plate is normally mounted inside the dock, but it was lost during field testing, but new markers haven’t been installed yet.</div>
         </div>
       </div>
     </section>
   );
 }
 
-// Видение развития проекта.
 function Vision() {
   return (
     <section className="vision" id="vision">
-      <img src={visionImage} alt="Future dock concept" className="vision-img" />
+      <img src={visionImage} alt="Vision" className="vision-img" />
       <div className="vision-content">
         <h2>Vision</h2>
         <p>
-          Today, we’re perfecting reliable landing and charging. Next, we’re
-          building a modular battery swap system and experimenting with
-          toroidal propellers to reduce noise. In the long run, we envision
-          networks of self‑service docks enabling continuous, human‑free
-          operations.
+          We focus on reliable landing + charging first. Battery swap and toroidal propellers are currently in development.
         </p>
       </div>
     </section>
   );
 }
 
-// Контакты и дополнительная информация.
 function Footer() {
   return (
     <footer className="footer" id="contact">
       <h2>Contact</h2>
-      <p>
-        Reach out for more information, demos or partnership opportunities.
-      </p>
-      <a href="mailto:info@enlil-systems.com" className="contact-button">
+      <p>For demos, partnerships, or XPONENTIAL 2026 coordination:</p>
+      <a className="contact-button" href="mailto:info@enlil-systems.com">
         info@enlil-systems.com
       </a>
     </footer>
@@ -208,9 +182,8 @@ export default function App() {
   return (
     <>
       <Hero />
-      <Highlights />
-      <Experiments />
-      <Media />
+      <Features />
+      <Demo />
       <Vision />
       <Footer />
     </>
