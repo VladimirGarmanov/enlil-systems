@@ -11,7 +11,7 @@ import toroidalModel from "./assets/toroidal.png";
 import stationPhoto from "./assets/dock.jpg";
 
 // Vision (оставляем)
-import visionImage from "./assets/vision.png";
+import visionImage from "./assets/vision.jpg";
 
 function FeatureCard({ icon, title, description }) {
   return (
@@ -170,9 +170,9 @@ function Footer() {
   return (
     <footer className="footer" id="contact">
       <h2>Contact</h2>
-      <p>For demos, partnerships, or XPONENTIAL 2026 coordination:</p>
-      <a className="contact-button" href="mailto:info@enlil-systems.com">
-        info@enlil-systems.com
+      <p>For demos or partnerships:</p>
+      <a className="contact-button" href="mailto:vladimirgarmanov29@gmail.com">
+        Contact the head of our team
       </a>
     </footer>
   );
